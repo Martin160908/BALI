@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "version": 1,
+    "lastModified": "2026-09-12T15:55:47.326Z",
+    "description": "Colección de ejemplo para validar el motor JSON-DB"
+  },
+  "records": [
+    {
+      "name": "Nuevo",
+      "active": false,
+      "id": "example_d177ffec",
+      "createdAt": "2026-09-12T15:55:33.552Z",
+      "updatedAt": "2026-09-12T15:55:33.552Z"
+    },
+    {
+      "name": "Nuevo",
+      "active": false,
+      "id": "ex_0e0171c4",
+      "createdAt": "2026-09-12T15:55:47.325Z",
+      "updatedAt": "2026-09-12T15:55:47.325Z"
+    }
+  ]
+}
