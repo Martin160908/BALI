@@ -18,6 +18,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Recuperación de contraseña
+
+El flujo de recuperación usa la tabla `public.users` existente y envía enlaces de un solo uso mediante Resend. Configura estas variables en el entorno del servidor:
+
+```env
+RESEND_API_KEY=re_...
+EMAIL_FROM=BALI <no-reply@tudominio.com>
+APP_URL=https://tu-dominio.com
+```
+
+En desarrollo, `APP_URL` puede omitirse y se usará el origen de la solicitud. En producción debe apuntar al dominio público de la aplicación. El usuario de Resend debe tener autorizado el dominio indicado en `EMAIL_FROM`.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

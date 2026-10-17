@@ -50,8 +50,10 @@ create policy "Usuarios pueden actualizar su propio registro"
   with check (auth.uid() = id);
 
 -- Ejemplo de inserción con password hasheado desde la app
--- insert into public.users (email, password_hash, full_name, role)
--- values ('admin@bali.com', '$2a$10$...', 'Administrador', 'admin');
+-- Contraseña de prueba: Admin123!
+-- Hash SHA-256: 3eb3fe66b31e3b4d10fa70b5cad49c7112294af6ae4e476a1c405155d45aa121
+-- insert into public.users (email, password_hash, full_name, role, is_active)
+-- values ('admin@bali.com', '3eb3fe66b31e3b4d10fa70b5cad49c7112294af6ae4e476a1c405155d45aa121', 'Administrador', 'admin', true);
 
 -- Consulta para login
 -- select id, email, full_name, role

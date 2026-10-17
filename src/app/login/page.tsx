@@ -21,10 +21,7 @@ export default function LoginPage() {
 
     const nextErrors: FieldErrors = {};
     const normalizedEmail = email.trim();
-    if (
-      normalizedEmail !== 'demo@BALI-com' &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)
-    ) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
       nextErrors.email = 'Ingresa un correo válido.';
     }
     if (!password.trim()) {
@@ -36,17 +33,44 @@ export default function LoginPage() {
 
     setIsSubmitting(true);
 
-    // TODO: conectar con la API real.
-    await new Promise((resolve) => setTimeout(resolve, 700));
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: normalizedEmail,
+          password,
+        }),
+      });
 
-    if (normalizedEmail === 'demo@BALI-com' && password === 'demo1234') {
+      const payload = (await response.json()) as {
+        success?: boolean;
+        error?: string;
+        user?: {
+          id: string;
+          email: string;
+          full_name?: string | null;
+          role?: string;
+        };
+      };
+
+      if (!response.ok || !payload.success) {
+        setErrors({
+          password: payload.error ?? 'Correo o contraseña incorrectos.',
+        });
+        return;
+      }
+
       window.sessionStorage.setItem('bali-demo-authenticated', 'true');
+      window.sessionStorage.setItem('bali-user', JSON.stringify(payload.user ?? null));
       router.push('/');
-      return;
+    } catch {
+      setErrors({ password: 'No se pudo iniciar sesión. Inténtalo de nuevo.' });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setErrors({ password: 'Correo o contraseña incorrectos.' });
-    setIsSubmitting(false);
   }
 
   return (
@@ -144,13 +168,12 @@ export default function LoginPage() {
                 <label htmlFor="password" className="text-sm font-semibold">
                   Contraseña
                 </label>
-                <a
-                  href="#"
-                  onClick={(event) => event.preventDefault()}
+                <Link
+                  href="/forgot-password"
                   className="text-sm font-semibold text-[#456b43] underline-offset-4 hover:underline"
                 >
                   Olvidé mi contraseña
-                </a>
+                </Link>
               </div>
               <input
                 id="password"

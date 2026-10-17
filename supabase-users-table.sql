@@ -50,13 +50,15 @@ create policy "users_update_own"
   using (auth.uid() = id)
   with check (auth.uid() = id);
 
--- Ejemplo de insert para usuario administrador:
--- insert into public.users (email, password_hash, full_name, role)
+-- Ejemplo de insert para usuario administrador con contraseña Admin123!
+-- hash generado con SHA-256: 3eb3fe66b31e3b4d10fa70b5cad49c7112294af6ae4e476a1c405155d45aa121
+-- insert into public.users (email, password_hash, full_name, role, is_active)
 -- values (
 --   'admin@bali.com',
---   '$2a$10$abcdefghijklmnopqrstuv',
+--   '3eb3fe66b31e3b4d10fa70b5cad49c7112294af6ae4e476a1c405155d45aa121',
 --   'Administrador',
---   'admin'
+--   'admin',
+--   true
 -- );
 
 -- Ejemplo de consulta para login:
